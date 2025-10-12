@@ -135,13 +135,17 @@
   }
 }
 
+/* Prevent layout shift from scrollbar */
 html{
   scroll-behavior: smooth;
   background-color: var(--background);
   overflow-x: hidden;
+  scrollbar-gutter: stable;
 
 }
+/* Alternative: Always show scrollbar space */
 body {
   font-family: var(--font-poppins);
   overflow-x: hidden;
+  overflow-y: scroll;
 }

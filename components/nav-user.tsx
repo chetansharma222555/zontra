@@ -6,7 +6,10 @@ import {
   ChevronsUpDown,
   CreditCard,
   LogOut,
+  Moon,
   Sparkles,
+  Sun,
+  SunMoon,
 } from "lucide-react"
 
 import {
@@ -29,17 +32,78 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { Skeleton } from "./ui/skeleton"
+import { useTheme } from "next-themes"
+import { toast } from "react-toastify"
+import { useRouter } from "next/navigation"
+
+const DEFAULT_AVATAR = "https://www.gravatar.com/avatar/?d=mp"
+
+type User = {
+  name : string,
+  email:string | undefined,
+  image:string
+}
+
+
+function NavUserSkeleton() {
+  return (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <SidebarMenuButton size="lg" className="flex items-center space-x-3">
+          {/* Avatar skeleton */}
+          <Skeleton className="h-8 w-8 rounded-full" />
+
+          {/* Text skeletons */}
+          <div className="grid flex-1 gap-1">
+            <Skeleton className="h-3 w-24" />
+            <Skeleton className="h-3 w-36" />
+          </div>
+
+          {/* Dropdown icon skeleton */}
+          <Skeleton className="h-4 w-4 ml-auto" />
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  )
+}
+
 
 export function NavUser({
   user,
 }: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
+  user: User
 }) {
+ const { resolvedTheme, setTheme } = useTheme()
   const { isMobile } = useSidebar()
+  if (!user) {
+
+    return <NavUserSkeleton />
+  }
+
+  const router = useRouter();
+
+  async function logOut() {
+     try {
+        const res = await fetch("/api/admin-logout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+    
+        const data = await res.json();
+    
+        if (res.ok) {
+          toast.success(data.message || "LogOut successful");
+          router.push("/admin-login"); // redirect on success
+        } else {
+          toast.error(data.message || "Something went wrong!");
+        }
+      } catch (error: any) {
+        toast.error(error?.message || "Something went wrong!");
+      }
+  }
 
   return (
     <SidebarMenu>
@@ -51,7 +115,7 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarImage src={user.image || DEFAULT_AVATAR} alt={user.name || "Annonymous"} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -61,6 +125,7 @@ export function NavUser({
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
@@ -70,7 +135,7 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage src={user.image || DEFAULT_AVATAR} alt={user.name || "Annonymous"} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -88,21 +153,27 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
+              <DropdownMenuItem
+                onClick={() =>
+                  setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                }
+                className="cursor-pointer flex items-center gap-2"
+              >
+                {resolvedTheme === "dark" ? (
+                  <>
+                    <Sun className="w-4 h-4" />
+                    <span>Light Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-4 h-4" />
+                    <span>Dark Mode</span>
+                  </>
+                )}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => logOut()} className="cursor-pointer">
               <LogOut />
               Log out
             </DropdownMenuItem>

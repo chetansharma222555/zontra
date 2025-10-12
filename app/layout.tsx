@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google"
 import { ThemeProvider } from "next-themes"
 import "./globals.css"
-import {  ToastContainer } from 'react-toastify';
+import { Slide, ToastContainer } from 'react-toastify';
 
 
 const poppins = Poppins({
@@ -39,11 +39,23 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
       >
-          <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"/>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          transition={Slide}
+        />
         {/* <SessionProvider> */}
-          <ThemeProvider
+        <ThemeProvider
           attribute="class"
-          defaultTheme="light"   
+          defaultTheme="light"
           enableSystem={true}  // or "system"
         >
           {children}

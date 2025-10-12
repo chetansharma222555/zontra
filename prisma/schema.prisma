@@ -1,0 +1,37 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+
+model Product {
+  id               String   @id @default(cuid())              // unique product ID
+  name             String                                   // product name
+  description      String?                                  // optional description
+  category         String                                   // category like "Electronics"
+  originalPrice    Float                                    // actual price
+  discountedPrice  Float?                                   // discounted price (optional)
+  discountPercent  Float? 
+  is_on_sale       Boolean  @default(false)                                  // discount % (optional)
+  quantity         Int       @default(0)                     // stock quantity
+  imageUrls        String[]                                  // image urls array
+  
+
+  createdAt        DateTime @default(now())                  // auto timestamp
+  updatedAt        DateTime @updatedAt    
+
+  @@index([createdAt(sort: Desc)])
+  @@index([is_on_sale])        // auto update timestamp
+}
+
+
+
+
+
+        

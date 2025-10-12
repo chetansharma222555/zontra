@@ -48,7 +48,7 @@ async function handleSubmit(e: React.FormEvent) {
     const data = await res.json();
 
     if (res.ok) {
-      toast.success(data.message || "Login successfuloo");
+      toast.success(data.message || "Login successful");
       router.push("/admin"); // redirect on success
     } else {
       toast.error(data.message || "Invalid credentials...");
