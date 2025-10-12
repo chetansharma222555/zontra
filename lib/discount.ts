@@ -25,7 +25,7 @@ export function calculateDiscountPercent(originalPrice: number, discountedPrice:
   return round2(pct)
 }
 
-export function toCurrency(n: number, currency = "USD", locale = "en-US"): string {
+export function toCurrency(n: number, currency = "INR", locale = "en-US"): string {
   try {
     return new Intl.NumberFormat(locale, { style: "currency", currency }).format(n || 0)
   } catch {

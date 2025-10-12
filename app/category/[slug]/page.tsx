@@ -15,7 +15,7 @@ const categoryData = {
             {
                 id: 1,
                 name: 'MacBook Pro 16"',
-                price: 2499,
+                price: 249900,
                 originalPrice: 2799,
                 rating: 4.8,
                 stockQuantity: 21,
@@ -25,7 +25,7 @@ const categoryData = {
             {
                 id: 2,
                 name: "Dell XPS 13",
-                price: 1299,
+                price: 34990,
                 rating: 4.6,
                 stockQuantity: 1,
                 image: "/dell-xps-laptop.jpg",
@@ -34,7 +34,7 @@ const categoryData = {
             {
                 id: 3,
                 name: "ThinkPad X1 Carbon",
-                price: 1899,
+                price: 20300,
                 rating: 4.7,
                 stockQuantity: 12,
 
@@ -44,7 +44,7 @@ const categoryData = {
             {
                 id: 4,
                 name: "Gaming Laptop RTX 4080",
-                price: 2199,
+                price: 87030,
                 originalPrice: 2499,
                 rating: 4.5,
                 stockQuantity: 3,
@@ -61,7 +61,7 @@ const categoryData = {
             {
                 id: 1,
                 name: "iPhone 15 Pro",
-                price: 999,
+                price: 120000,
                 rating: 4.9,
                 image: "/iphone-15-pro-hands.png",
                 badge: "Best Seller",
@@ -71,7 +71,7 @@ const categoryData = {
             {
                 id: 2,
                 name: "Samsung Galaxy S24",
-                price: 899,
+                price: 18990,
                 originalPrice: 999,
                 rating: 4.7,
                 stockQuantity: 13,
@@ -82,7 +82,7 @@ const categoryData = {
             {
                 id: 3,
                 name: "Google Pixel 8",
-                price: 699,
+                price: 16990,
                 rating: 4.6,
                 stockQuantity: 1,
 
@@ -92,7 +92,7 @@ const categoryData = {
             {
                 id: 4,
                 name: "OnePlus 12",
-                price: 799,
+                price: 17990,
                 rating: 4.5,
                 stockQuantity: 33,
 
@@ -108,7 +108,7 @@ const categoryData = {
             {
                 id: 1,
                 name: 'Samsung 65" QLED 4K',
-                price: 1299,
+                price: 129900,
                 originalPrice: 1599,
                 rating: 4.8,
                 stockQuantity: 1,
@@ -119,7 +119,7 @@ const categoryData = {
             {
                 id: 2,
                 name: 'LG 55" OLED C3',
-                price: 1499,
+                price: 149900,
                 rating: 4.9,
                 image: "/lg-oled-tv.png",
                 stockQuantity: 5,
@@ -129,7 +129,7 @@ const categoryData = {
             {
                 id: 3,
                 name: 'Sony 75" Bravia XR',
-                price: 2199,
+                price: 219900,
                 rating: 4.7,
                 image: "/sony-bravia-tv.jpg",
                 stockQuantity: 10,
@@ -139,7 +139,7 @@ const categoryData = {
             {
                 id: 4,
                 name: 'TCL 43" 4K Smart TV',
-                price: 399,
+                price: 123000,
                 rating: 4.4,
                 image: "/tcl-smart-tv.jpg",
                 stockQuantity: 11,
@@ -155,7 +155,7 @@ const categoryData = {
             {
                 id: 1,
                 name: "AirPods Pro 2",
-                price: 249,
+                price: 2490,
                 rating: 4.8,
                 image: "/airpods-pro-lifestyle.png",
                 stockQuantity: 132,
@@ -165,7 +165,7 @@ const categoryData = {
             {
                 id: 2,
                 name: "Sony WH-1000XM5",
-                price: 399,
+                price: 3990,
                 originalPrice: 449,
                 rating: 4.9,
                 image: "/sony-wh-1000xm5.png",
@@ -176,7 +176,7 @@ const categoryData = {
             {
                 id: 3,
                 name: "Bose QuietComfort",
-                price: 329,
+                price: 3290,
                 rating: 4.7,
                 stockQuantity: 2,
 
@@ -186,7 +186,7 @@ const categoryData = {
             {
                 id: 4,
                 name: "Sennheiser HD 660S",
-                price: 499,
+                price: 4949,
                 rating: 4.6,
                 stockQuantity: 123,
 
@@ -267,10 +267,10 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                                 </CardHeader>
                                 <CardContent className="pt-0">
                                     <div className="flex items-center gap-2 mb-4">
-                                        <span className="text-2xl font-bold text-foreground">${product.price.toLocaleString()}</span>
+                                        <span className="text-2xl font-bold text-foreground">₹{product.price.toLocaleString()}</span>
                                         {product.originalPrice && (
                                             <span className="text-lg text-muted-foreground line-through">
-                                                ${product.originalPrice.toLocaleString()}
+                                                ₹{product.originalPrice.toLocaleString()}
                                             </span>
                                         )}
                                     </div>

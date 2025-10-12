@@ -15,8 +15,8 @@ export type Product = {
     name: string
     description: string
     category:string
-    originalPrice: number
-    discountedPrice: number
+    originalPrice: number | string
+    discountedPrice: number | string
     quantity:number
 }
 

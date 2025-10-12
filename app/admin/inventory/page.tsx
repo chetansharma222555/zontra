@@ -128,6 +128,9 @@ const processedData = fakeProducts.map(prod => ({
   ...prod,
   name:truncateText(prod.name ,22),
   description: truncateText(prod.description, 30),
+  originalPrice:`₹ ${prod.originalPrice}`,
+  discountedPrice:`₹ ${prod.discountedPrice}`,
+
 }));
   return (
     <>
