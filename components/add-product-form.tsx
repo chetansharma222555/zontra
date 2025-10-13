@@ -28,7 +28,7 @@ type FormValues = {
 
 type Errors = Partial<Record<keyof FormValues, string>>
 
-const CATEGORIES = ["Electronics", "Apparel", "Home", "Books", "Other"] as const
+const CATEGORIES = ["Phones", "Laptops", "Television", "Headphones", "Other"] as const
 type LastEdited = "discountedPrice" | "discountPercent" | null
 
 export function AddProductForm({ className }: { className?: string }) {
@@ -155,69 +155,70 @@ export function AddProductForm({ className }: { className?: string }) {
   // }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  e.preventDefault();
 
-    const eobj = validate(values)
-    setErrors(eobj)
+  const eobj = validate(values);
+  setErrors(eobj);
 
-    // If validation fails, stop
-    if (Object.keys(eobj).length > 0) {
-      toast.error("Please fill the details correctly before submitting.")
-      return
-    }
-
-    setIsSubmitting(true)
-
-    try {
-
-      const productdata = {
-        name: values.name,
-        description: values.description,
-        originalPrice: values.originalPrice,
-        category: values.category,
-        images: values.images ,
-        is_on_sale: values.discountPercent > 0,
-        discountPercent: values.discountPercent,
-        discountedPrice: values.discountedPrice,
-        quantity: values.quantity
-      }
-
-      const res = await fetch("/api/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(productdata),
-      })
-
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}))
-        throw new Error(errorData.message || "Failed to add product")
-      }
-
-      const data = await res.json()
-      console.log("[Product Added Successfully]", data)
-
-      toast.success("Product added successfully!")
-
-      // Reset form
-      setValues({
-        name: "",
-        category: "",
-        description: "",
-        originalPrice: 0,
-        discountedPrice: 0,
-        discountPercent: 0,
-        quantity: 0,
-        images: [],
-      })
-      setLastEdited(null)
-      setErrors({})
-    } catch (err: any) {
-      console.error(err)
-      toast.error(err.message || "Something went wrong while adding the product.")
-    } finally {
-      setIsSubmitting(false)
-    }
+  if (Object.keys(eobj).length > 0) {
+    toast.error("Please fill the details correctly before submitting.");
+    return;
   }
+
+  setIsSubmitting(true);
+
+  try {
+    // Build form data
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("description", values.description);
+    formData.append("originalPrice", String(values.originalPrice));
+    formData.append("category", values.category);
+    formData.append("is_on_sale", String(values.discountPercent > 0));
+    formData.append("discountPercent", String(values.discountPercent));
+    formData.append("discountedPrice", String(values.discountedPrice));
+    formData.append("quantity", String(values.quantity));
+
+    // Add each image file
+    values.images.forEach((img) => {
+      formData.append("images", img.file, img.name);
+    });
+
+    const res = await fetch("/api/products", {
+      method: "POST",
+      body: formData, // 👈 no headers, browser sets automatically
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.message || "Failed to add product");
+    }
+
+    const data = await res.json();
+    console.log("[Product Added Successfully]", data);
+
+    toast.success("Product added successfully!");
+
+    // Reset form
+    setValues({
+      name: "",
+      category: "",
+      description: "",
+      originalPrice: 0,
+      discountedPrice: 0,
+      discountPercent: 0,
+      quantity: 0,
+      images: [],
+    });
+    setLastEdited(null);
+    setErrors({});
+  } catch (err: any) {
+    console.error(err);
+    toast.error(err.message || "Something went wrong while adding the product.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const onImagesChange = (imgs: UploadedImage[]) => {
     setField("images", imgs)

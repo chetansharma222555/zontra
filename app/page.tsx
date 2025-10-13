@@ -23,7 +23,7 @@ const categories = [
     productCount: 18,
   },
   {
-    id: "tvs",
+    id: "television",
     name: "TVs",
     description: "Smart TVs and displays for entertainment",
     image: 'tv_category_photo.png',

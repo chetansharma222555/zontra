@@ -13,10 +13,22 @@ import {
 import { DataTable } from "./data-table"
 import { columns, Product } from "./columns"
 import { truncateText } from "@/lib/utils"
+import { prisma } from "@/lib/prisma"
 
 
 
-export default function Page() {
+export default async function Page() {
+  const products = await prisma.product.findMany({
+    select:{
+      id:true,
+      name:true,
+      description:true,
+      category:true,
+      originalPrice:true,
+      discountedPrice:true,
+      quantity:true
+    }
+  }) 
   const fakeProducts: Product[] = [
   {
     id: '1',
@@ -124,7 +136,7 @@ export default function Page() {
 //   return processedData;
 // }
 
-const processedData = fakeProducts.map(prod => ({
+const processedData = products.map(prod => ({
   ...prod,
   name:truncateText(prod.name ,22),
   description: truncateText(prod.description, 30),

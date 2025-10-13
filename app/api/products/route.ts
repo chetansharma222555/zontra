@@ -39,53 +39,58 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    // Parse request body
-    const body = await request.json();
-    const { images, name, description, originalPrice, category, is_on_sale, discountPercent, discountedPrice, quantity } = body;
+    const formData = await request.formData();
 
-    // images is expected to be an array of { name: string, base64: string } or File-like objects
+    const name = formData.get("name") as string;
+    const description = formData.get("description") as string;
+    const originalPrice = Number(formData.get("originalPrice"));
+    const category = formData.get("category") as string;
+    const is_on_sale = formData.get("is_on_sale") === "true";
+    const discountPercent = Number(formData.get("discountPercent"));
+    const discountedPrice = Number(formData.get("discountedPrice"));
+    const quantity = Number(formData.get("quantity"));
+
     const uploadedUrls: string[] = [];
 
-    if (images && images.length > 0) {
-      for (const imageObj of images) {
-        const fileName = imageObj.name;
-        // const fileBuffer = Buffer.from(imageObj.base64, 'base64'); // convert base64 to buffer if coming from frontend
-        
-        const { data, error } = await supabaseAdmin.storage
-          .from('product-images')
-          .upload(fileName, imageObj.file);
+    const images = formData.getAll("images") as File[];
 
-        if (error) throw new Error(`Failed to upload ${fileName}: ${error.message}`);
+    for (const file of images) {
+      const fileName = `${Date.now()}-${file.name}`;
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
 
-        const { data: publicUrlData } = supabaseAdmin.storage
-          .from('product-images')
-          .getPublicUrl(fileName);
+      const { data, error } = await supabaseAdmin.storage
+        .from("product-images")
+        .upload(fileName, buffer, {
+          contentType: file.type,
+          upsert: true,
+        });
 
-        if (!publicUrlData?.publicUrl) throw new Error(`Failed to get public URL for ${fileName}`);
+      if (error) throw new Error(error.message);
 
-        uploadedUrls.push(publicUrlData.publicUrl);
-      }
+      const { data: publicUrlData } = supabaseAdmin.storage
+        .from("product-images")
+        .getPublicUrl(fileName);
+
+      uploadedUrls.push(publicUrlData.publicUrl);
     }
 
-    // Create product in DB
     const product = await ProductService.createProduct({
       name,
-      description: description,
+      description,
       originalPrice,
       category,
       imageUrls: uploadedUrls,
-      is_on_sale: is_on_sale,
-      discountPercent: discountPercent,
+      is_on_sale,
+      discountPercent,
       discountedPrice,
-      quantity
+      quantity,
     });
 
     return NextResponse.json(product, { status: 201 });
   } catch (error: any) {
-    console.error('Error creating product:', error);
-    return NextResponse.json(
-      { error: error.message || 'Failed to create product' },
-      { status: 500 }
-    );
+    console.error("Error creating product:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
