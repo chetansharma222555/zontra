@@ -4,12 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Star } from "lucide-react"
-import { notFound } from "next/navigation"
+import { notFound, useRouter } from "next/navigation"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
 import { Product } from "@prisma/client"
 import { CategoryType } from "@/lib/category-data"
 import { useEffect, useState } from "react"
+import { truncateText } from "@/lib/utils"
 
 
 type CategoryComponentProps = {
@@ -34,13 +35,13 @@ function ImageSlider({ product }: { product: Product }) {
   }, [images.length])
 
   return (
-    <div className="relative w-full h-48 overflow-hidden">
+    <div className="group relative w-full h-48 overflow-hidden">
       {images.map((img, index) => (
         <img
           key={index}
           src={img}
           alt={product.name}
-          className={`absolute top-0 left-0 w-full h-48 object-cover transition-opacity duration-700 ${
+          className={`absolute top-0 left-0 w-full h-58 object-cover object-center transition-opacity duration-700 group-hover:scale-105 transition-transform duration-500 ${
             index === current ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         />
@@ -58,7 +59,7 @@ function ImageSlider({ product }: { product: Product }) {
 
 export default function CategoryPage({ category }: CategoryComponentProps ) {
   
-
+    const router = useRouter();
     return (
         <div className="min-h-screen bg-background">
             {/* Header */}
@@ -85,6 +86,7 @@ export default function CategoryPage({ category }: CategoryComponentProps ) {
                             <Card
                                 key={product.id}
                                 className="group hover:shadow-lg transition-all duration-300 border-border bg-card overflow-hidden"
+                                onClick={() => router.push(`/product/${product.id}`)}
                             >
                                 {/* <div className="relative">
                                     <img
@@ -115,8 +117,8 @@ export default function CategoryPage({ category }: CategoryComponentProps ) {
                                         </div>
                                     </div>
                                 </CardHeader>
-                                <CardContent className="pt-0">
-                                    <div className="flex items-center gap-2 mb-4">
+                                <CardContent className="pt-0 flex flex-col">
+                                    <div className="flex items-center gap-2 mb-2">
                                         <span className="text-2xl font-bold text-foreground">{product.discountedPrice ? `₹${product.discountedPrice}` : `₹${product.originalPrice}`}</span>
                                         {!(product.discountedPrice == product.originalPrice) && (
                                             <span className="text-lg text-muted-foreground line-through">
@@ -124,7 +126,10 @@ export default function CategoryPage({ category }: CategoryComponentProps ) {
                                             </span>
                                         )}
                                     </div>
-                                    <Button className="w-full">Add to Cart</Button>
+                                    <div>
+                                        <p>{truncateText(product?.description, 35)}</p>
+                                    </div>
+                                    
                                 </CardContent>
                             </Card>
                         ))}

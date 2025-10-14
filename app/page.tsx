@@ -7,6 +7,7 @@ import Header from "@/components/Header"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import Footer from "@/components/Footer";
+import {  useTheme } from "next-themes";
 const categories = [
   {
     id: "laptops",
@@ -41,7 +42,7 @@ const categories = [
 export default function HomePage() {
 
   const router = useRouter();
-
+ const { theme } = useTheme();  // theme = 'light' or 'dark'
   return (
     <div className="min-h-screen bg-background font-poppins">
       {/* Header */}
@@ -53,7 +54,7 @@ export default function HomePage() {
           src="/background.png"
           alt="Background"
           fill
-          className="object-cover object-center opacity-60"
+          className={`object-cover object-center ${theme === 'light' ? 'opacity-80' : 'opacity-10'}`}
           priority
         />
 
