@@ -3,11 +3,12 @@ import { ProductService } from '@/lib/services/product-service';
 import { getErrorMessage } from '@/lib/utils';
 
 // GET single product
-export async function GET(
-  { params }: { params: { id: string } }
+export async function GET(request:NextRequest,
+  { params }: { params:  Promise<{ id: string; }> }
 ) {
+  const id = (await params).id
   try {
-    const product = await ProductService.getProductById(params.id);
+    const product = await ProductService.getProductById(id);
 
     if (!product) {
       return NextResponse.json(
