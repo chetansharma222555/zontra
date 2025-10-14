@@ -102,7 +102,7 @@ export function ImageUploader({
         onDragOver={onDragOver}
         className="rounded-md border border-dashed p-4 text-sm text-muted-foreground"
       >
-        Drag and drop images here, or click "Upload images"
+        Drag and drop images here, or click Upload images
       </div>
 
       {images.length > 0 ? (

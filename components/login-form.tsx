@@ -1,5 +1,5 @@
 "use client"
-import { cn } from "@/lib/utils"
+import { cn, getErrorMessage } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card"
 import {
   Field,
-  FieldDescription,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
@@ -53,8 +52,8 @@ async function handleSubmit(e: React.FormEvent) {
     } else {
       toast.error(data.message || "Invalid credentials...");
     }
-  } catch (error: any) {
-    toast.error(error?.message || "Something went wrong!");
+  } catch (error) {
+    toast.error(getErrorMessage(error));
   } finally {
     setLoading(false);
   }

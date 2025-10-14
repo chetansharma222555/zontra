@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma"
 import { categoryData } from "@/lib/category-data"
-import { use } from "react";
 import CategoryPage from "./CategoryPage";
 
 

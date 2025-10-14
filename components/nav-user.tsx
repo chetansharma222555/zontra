@@ -1,15 +1,12 @@
 "use client"
 
 import {
-  BadgeCheck,
-  Bell,
+
   ChevronsUpDown,
-  CreditCard,
   LogOut,
   Moon,
   Sparkles,
-  Sun,
-  SunMoon,
+  Sun
 } from "lucide-react"
 
 import {
@@ -36,6 +33,7 @@ import { Skeleton } from "./ui/skeleton"
 import { useTheme } from "next-themes"
 import { toast } from "react-toastify"
 import { useRouter } from "next/navigation"
+import { getErrorMessage } from "@/lib/utils"
 
 const DEFAULT_AVATAR = "https://www.gravatar.com/avatar/?d=mp"
 
@@ -74,14 +72,16 @@ export function NavUser({
 }: {
   user: User
 }) {
- const { resolvedTheme, setTheme } = useTheme()
+  const router = useRouter();
+  const { resolvedTheme, setTheme } = useTheme()
   const { isMobile } = useSidebar()
   if (!user) {
 
     return <NavUserSkeleton />
   }
 
-  const router = useRouter();
+ 
+
 
   async function logOut() {
      try {
@@ -100,8 +100,8 @@ export function NavUser({
         } else {
           toast.error(data.message || "Something went wrong!");
         }
-      } catch (error: any) {
-        toast.error(error?.message || "Something went wrong!");
+      } catch (error) {
+        toast.error(getErrorMessage(error));
       }
   }
 

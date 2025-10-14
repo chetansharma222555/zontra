@@ -1,16 +1,16 @@
 "use client"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Star } from "lucide-react"
-import { notFound, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
 import { Product } from "@prisma/client"
 import { CategoryType } from "@/lib/category-data"
 import { useEffect, useState } from "react"
 import { truncateText } from "@/lib/utils"
+import Image from "next/image"
 
 
 type CategoryComponentProps = {
@@ -37,7 +37,7 @@ function ImageSlider({ product }: { product: Product }) {
   return (
     <div className="group relative w-full h-48 overflow-hidden">
       {images.map((img, index) => (
-        <img
+        <Image
           key={index}
           src={img}
           alt={product.name}

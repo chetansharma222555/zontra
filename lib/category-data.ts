@@ -34,45 +34,6 @@ export const categoryData = {
 } as const
 
 
-const categories = [
-  {
-    id: "laptops",
-    name: "Laptops",
-    description: "High-performance laptops for work and gaming",
-    image: 'laptop_category_photo.png',
-    productCount: 24,
-    products: [],
-
-  },
-  {
-    id: "phones",
-    name: "Phones",
-    description: "Latest smartphones with cutting-edge technology",
-    image: 'phone_category_photo.png',
-    productCount: 18,
-    products: [],
-
-  },
-  {
-    id: "tvs",
-    name: "TVs",
-    description: "Smart TVs and displays for entertainment",
-    image: 'tv_category_photo.png',
-    productCount: 12,
-    products: [],
-
-  },
-  {
-    id: "headphones",
-    name: "Headphones",
-    description: "Premium audio equipment and accessories",
-    image: 'headphones_category_photo.png',
-    productCount: 32,
-    products: [],
-
-  }
-]
-
 export type CategoryType = {
   id: "phones"
   name: "Phones"

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ProductService } from '@/lib/services/product-service';
+import { getErrorMessage } from '@/lib/utils';
 
 // GET single product
 export async function GET(
@@ -17,9 +18,9 @@ export async function GET(
     }
 
     return NextResponse.json(product);
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch product' },
+      { error: getErrorMessage(error) },
       { status: 500 }
     );
   }
@@ -36,9 +37,9 @@ export async function PATCH(
     const product = await ProductService.updateProduct(params.id, body);
 
     return NextResponse.json(product);
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { error: error.message || 'Failed to update product' },
+      { error: getErrorMessage(error) },
       { status: 500 }
     );
   }
@@ -53,9 +54,9 @@ export async function DELETE(
     await ProductService.deleteProduct(params.id);
 
     return NextResponse.json({ message: 'Product deleted successfully' });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { error: error.message || 'Failed to delete product' },
+      { error:getErrorMessage(error)},
       { status: 500 }
     );
   }

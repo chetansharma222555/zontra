@@ -1,5 +1,4 @@
 import { AddProductForm } from "@/components/add-product-form"
-import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,

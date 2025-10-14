@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import * as React from "react"
 
 type ProductGalleryProps = {
@@ -44,16 +45,12 @@ export function ProductGallery({
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
   }, [goPrev, goNext])
-
-  const onSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value)
-    if (!Number.isNaN(value)) setIndex(value)
-  }
+  
 
   return (
     <div className={["w-full", className].filter(Boolean).join(" ")}>
       <div className="relative w-full overflow-hidden rounded-lg bg-card">
-      <img
+      <Image
   src={safeImages[index] || "/placeholder.svg"}
   alt={`${altBase} ${index + 1}`}
   className="w-full sm:h-80 md:h-96 lg:h-150 lg:w-150 object-cover object-center rounded-md"

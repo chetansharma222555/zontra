@@ -2,6 +2,8 @@ import { LoginForm } from "@/components/login-form"
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 import { redirect } from "next/navigation";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/utils";
 
 
 export default async function Page() {
@@ -17,6 +19,7 @@ export default async function Page() {
       redirect("/admin");
     } catch (err) {
       // invalid token, do nothing (stay on login)
+      toast.error(getErrorMessage(err))
     }
   }
   return (

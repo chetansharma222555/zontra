@@ -9,11 +9,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { cn } from "@/lib/utils"
+import { cn, getErrorMessage } from "@/lib/utils"
 import { calculateDiscountedPrice, calculateDiscountPercent, toCurrency, toNumber, round2 } from "@/lib/discount"
 import { ImageUploader, type UploadedImage } from "./image-uploader"
-import { toast, ToastContainer } from "react-toastify"
-import { supabase } from "@/lib/supabase/client"
+import { toast } from "react-toastify"
+import Image from "next/image"
 
 type FormValues = {
   name: string
@@ -212,9 +212,8 @@ export function AddProductForm({ className }: { className?: string }) {
     });
     setLastEdited(null);
     setErrors({});
-  } catch (err: any) {
-    console.error(err);
-    toast.error(err.message || "Something went wrong while adding the product.");
+  } catch (err) {
+    toast.error(getErrorMessage(err));
   } finally {
     setIsSubmitting(false);
   }
@@ -474,7 +473,7 @@ export function AddProductForm({ className }: { className?: string }) {
                 <div className="grid grid-cols-3 gap-2">
                   {values.images.slice(0, 6).map((img) => (
                     <div key={img.id} className="relative aspect-square overflow-hidden rounded-md">
-                      <img src={img.url || "/placeholder.svg"} alt={img.name} className="h-full w-full object-cover" />
+                      <Image src={img.url || "/placeholder.svg"} alt={img.name} className="h-full w-full object-cover" />
                     </div>
                   ))}
                 </div>

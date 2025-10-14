@@ -1,8 +1,5 @@
 'use client';
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Laptop, Smartphone, Tv, Headphones } from "lucide-react"
+import { Card } from "@/components/ui/card"
 import Header from "@/components/Header"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
