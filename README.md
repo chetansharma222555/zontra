@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shop Admin Dashboard
 
-## Getting Started
+A modern **Admin Dashboard** for Indian shops to manage their stock and inventory efficiently. Upload product images and details, which are then displayed on the shop's website. Built with **Next.js**, **TailwindCSS**, **Shadcn/ui**, **Supabase**, and **Recharts**.
 
-First, run the development server:
+---
+
+## 🛠 Tech Stack
+
+- **Frontend:** Next.js, React  
+- **Styling:** TailwindCSS, Shadcn/ui  
+- **Backend / Storage:** Supabase (for storing product images)  
+- **Charts:** Recharts  
+- **Icons:** Lucide-react  
+- **Authentication:** JWT-based simple admin login  
+
+---
+
+## 🚀 Features
+
+- **Admin Authentication** – Secure login for shop admins.  
+- **Product Management** – Add, edit, and remove products.  
+- **Image Uploads** – Upload multiple images per product with automatic resizing.  
+- **Responsive Design** – Works on all screen sizes (mobile, tablet, desktop).  
+- **Dashboard Analytics** – View sales overview and top product summaries with charts.  
+- **Placeholder Handling** – Shows placeholder images if a product has no image.  
+
+---
+
+## 📂 Project Structure
+
+/components -> Reusable UI components
+/pages -> Next.js pages
+/lib -> Supabase utils and API functions
+/styles -> Tailwind / global CSS
+
+
+---
+
+## ⚡ Installation & Setup
+
+1. **Clone the repo**
 
 ```bash
-npm run dev
+git clone <your-repo-url>
+cd shop-admin-dashboard
+
+
+npm install
 # or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+yarn install
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**.env**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+DATABASE_URL=<your-database-url>
+DIRECT_URL=<your-direct-url>
+SUPABASE_SERVICE_ROLE_KEY=<your-supabase-service-role-key>
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+**.env.local**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ADMIN_USEREMAIL=<your-admin-email>
+ADMIN_PASSWORD=<your-admin-password>
+JWT_SECRET=<your-jwt-secret>
+NEXT_PUBLIC_SUPABASE_URL=<your-supabase-url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-supabase-anon-key>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
