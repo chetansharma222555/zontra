@@ -10,7 +10,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { DataTable } from "./data-table"
-import { columns, Product } from "./columns"
+import { columns } from "./columns"
 import { truncateText } from "@/lib/utils"
 import { prisma } from "@/lib/prisma"
 

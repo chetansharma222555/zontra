@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ProductService } from '@/lib/services/product-service';
 
 import { createClient } from '@supabase/supabase-js';
+import { getErrorMessage } from '@/lib/utils';
 
 export const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -10,7 +11,7 @@ export const supabaseAdmin = createClient(
 
 
 // GET all products
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // const searchParams = request.nextUrl.searchParams;
     // const page = parseInt(searchParams.get('page') || '1');
@@ -26,9 +27,9 @@ export async function GET(request: NextRequest) {
 
     // const result = await ProductService.getProductsPaginated(page, limit);
     return NextResponse.json(result);
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch products' },
+      { error: getErrorMessage(error) },
       { status: 500 }
     );
   }
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      const { data, error } = await supabaseAdmin.storage
+      const { error } = await supabaseAdmin.storage
         .from("product-images")
         .upload(fileName, buffer, {
           contentType: file.type,
@@ -88,9 +89,8 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(product, { status: 201 });
-  } catch (error: any) {
-    console.error("Error creating product:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error: getErrorMessage(error) }, { status: 500 });
   }
 }
 
