@@ -4,7 +4,6 @@ import { getErrorMessage } from '@/lib/utils';
 
 // GET single product
 export async function GET(
-  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
