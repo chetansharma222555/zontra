@@ -10,6 +10,7 @@ import { CategoryType } from "@/lib/category-data"
 import { useEffect, useState } from "react"
 import { truncateText } from "@/lib/utils"
 import Image from "next/image"
+import { Product } from "@prisma/client"
 
 type CategoryComponentProps = {
   category: CategoryType
