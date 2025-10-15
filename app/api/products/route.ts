@@ -10,7 +10,7 @@ export const supabaseAdmin = createClient(
 );
 
 
-// GET all products
+// GET all productsgit 
 export async function GET() {
   try {
     // const searchParams = request.nextUrl.searchParams;
