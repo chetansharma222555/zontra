@@ -6,12 +6,10 @@ import { ArrowLeft, Star } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
-import { Product } from "@prisma/client"
 import { CategoryType } from "@/lib/category-data"
 import { useEffect, useState } from "react"
 import { truncateText } from "@/lib/utils"
 import Image from "next/image"
-
 
 type CategoryComponentProps = {
   category: CategoryType
