@@ -15,29 +15,38 @@ import { truncateText } from "@/lib/utils"
 import { prisma } from "@/lib/prisma"
 
 
+type ProductPreview = {
+  id: string;
+  name: string;
+  description: string | null;
+  category: string;
+  originalPrice: number;
+  discountedPrice: number | null;
+  quantity: number;
+};
 
 export default async function Page() {
-  const products = await prisma.product.findMany({
-    select:{
-      id:true,
-      name:true,
-      description:true,
-      category:true,
-      originalPrice:true,
-      discountedPrice:true,
-      quantity:true
-    }
-  }) 
 
+const products = await prisma.product.findMany({
+  select: {
+    id: true,
+    name: true,
+    description: true,
+    category: true,
+    originalPrice: true,
+    discountedPrice: true,
+    quantity: true,
+  },
+});
 
-const processedData = products.map(prod => ({
+const processedData = products.map((prod: ProductPreview) => ({
   ...prod,
-  name:truncateText(prod.name ,22),
-  description: truncateText(prod.description, 30),
-  originalPrice:`₹ ${prod.originalPrice}`,
-  discountedPrice:`₹ ${prod.discountedPrice}`,
-
+  name: truncateText(prod.name, 22),
+  description: truncateText(prod.description ?? "", 30),
+  originalPrice: `₹ ${prod.originalPrice}`,
+  discountedPrice: `₹ ${prod.discountedPrice}`,
 }));
+
   return (
     <>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
