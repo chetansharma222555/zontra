@@ -30,7 +30,7 @@ export default async function Page() {
   }) 
 
 
-const processedData = products.map(prod => ({
+const processedData = products.map((prod: { name: string; description: string; originalPrice: string; discountedPrice: string }) => ({
   ...prod,
   name:truncateText(prod.name ,22),
   description: truncateText(prod.description, 30),
