@@ -5,10 +5,10 @@ import { getErrorMessage } from "@/lib/utils";
 // ✅ GET single product
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params:  Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params; // no need to await — params is not a Promise
+    const id = (await params).id; // no need to await — params is not a Promise
     const product = await ProductService.getProductById(id);
 
     if (!product) {
@@ -27,11 +27,12 @@ export async function GET(
 // ✅ PATCH update product
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params:  Promise<{ id: string }>}
 ) {
+    const id = (await params).id
   try {
     const body = await request.json();
-    const updatedProduct = await ProductService.updateProduct(params.id, body);
+    const updatedProduct = await ProductService.updateProduct(id, body);
 
     return NextResponse.json(updatedProduct);
   } catch (error) {
@@ -45,10 +46,11 @@ export async function PATCH(
 // ✅ DELETE product
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params:  Promise<{ id: string }> }
 ) {
+    const id = (await params).id
   try {
-    await ProductService.deleteProduct(params.id);
+    await ProductService.deleteProduct(id);
 
     return NextResponse.json({ message: "Product deleted successfully" });
   } catch (error) {
