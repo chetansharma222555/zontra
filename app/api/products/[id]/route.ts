@@ -27,23 +27,23 @@ import { getErrorMessage } from '@/lib/utils';
 // }
 
 // PATCH update product
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const body = await request.json();
+// export async function PATCH(
+//   request: NextRequest,
+//   { params }: { params: { id: string } }
+// ) {
+//   try {
+//     const body = await request.json();
     
-    const product = await ProductService.updateProduct(params.id, body);
+//     const product = await ProductService.updateProduct(params.id, body);
 
-    return NextResponse.json(product);
-  } catch (error) {
-    return NextResponse.json(
-      { error: getErrorMessage(error) },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json(product);
+//   } catch (error) {
+//     return NextResponse.json(
+//       { error: getErrorMessage(error) },
+//       { status: 500 }
+//     );
+//   }
+// }
 
 // DELETE product
 export async function DELETE(
