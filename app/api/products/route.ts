@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ProductService } from '@/lib/services/product-service';
 
-import { createClient } from '@supabase/supabase-js';
 import { getErrorMessage } from '@/lib/utils';
+import { supabaseAdmin } from '@/lib/supabase/client';
 
-export const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY! // server-only
-);
+
 
 
 // GET all productsgit 
