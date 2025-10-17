@@ -12,7 +12,7 @@ export default async function Page( {params }: { params: Promise<{ id: string }>
         }
     });
   return (
-    <main className="mx-auto w-full max-w-7xl">
+    <main className="mx-auto w-full">
         <Header />
       <ProductPage product={product} sellerPhone="919870740311" />
     </main>
